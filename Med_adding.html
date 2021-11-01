@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+</head>
+
+<body>
+
+    <style>
+        body {
+            overflow: hidden;
+            /* Hide scrollbars */
+        }
+
+        .container {
+            width: 322px;
+            height: 117.25px;
+            position: relative;
+            right: 50px;
+        }
+
+        .buttmenu {
+            background-color: white;
+            border-color: whitesmoke;
+            border-color: white;
+            border-right: rgba(121, 121, 121, 0.699);
+        }
+    </style>
+    <style>
+        #menu {
+            border-right: 2px solid rgba(121, 121, 121, 0.699);
+            position: absolute;
+            height: 1033px;
+        }
+    </style>
+    <style>
+        .imgmenu {
+            width: 63px;
+            height: 74px;
+            position: relative;
+            top: 20px;
+
+        }
+
+        .menutext {
+            position: relative;
+            left: 20px;
+            top: 25px;
+            font-weight: 700;
+            color: rgba(0, 0, 0, 0.521);
+        }
+    </style>
+    <style>
+        #logo {
+            height: 66px;
+            width: 187px;
+            position: relative;
+            left: 60px;
+            top: 25px;
+
+        }
+
+        #logocontain {
+            width: 336px;
+            height: 117.25px;
+            border-bottom: 2px solid rgba(121, 121, 121, 0.699);
+        }
+    </style>
+    <style>
+        #logout {
+            font-weight: 700;
+            font-size: medium;
+            border-radius: 10px;
+            border-color: rgb(197, 197, 197);
+            background-color: white;
+            color: rgb(99, 99, 99);
+            width: 87px;
+            height: 33px;
+            position: relative;
+            top: 350px;
+            left: 200px;
+            box-shadow: 1px 3px rgb(124, 124, 124);
+        }
+    </style>
+    <div id="menu">
+        <div id="logocontain">
+            <img src="pic/Hua-D logo.png" alt="" id="logo">
+        </div>
+        <a href="patientinfo.html">
+            <button class="buttmenu" style="box-shadow: 0px 4px rgb(199, 199, 199);">
+                <div class="container">
+                    <img src="pic/patientinfo.png" alt="" class="imgmenu">
+                    <span class="menutext">Patient Information</span>
+                </div>
+            </button>
+        </a>
+        <br>
+        <a href="staffinfo.html">
+            <button class="buttmenu">
+                <div class="container">
+                    <img src="pic/staffinfo.png" alt="" class="imgmenu">
+                    <span class="menutext">Staff Information</span>
+                </div>
+            </button>
+        </a>
+
+        <br>
+        <a href="#">
+            <button class="buttmenu" style="background-color: rgba(82, 82, 82, 0.192);">
+                <div class="container">
+                    <img src="pic/medstock.png" alt="" class="imgmenu" style="height: 62px; ">
+                    <span class="menutext">Medicine Stocking</span>
+                </div>
+            </button>
+        </a>
+        <br>
+        <a href="insightdata.html">
+            <button class="buttmenu">
+                <div class="container" style="position: relative;right: 70px;">
+                    <img src="pic/insight.png" alt="" class="imgmenu" style="height: 71px;">
+                    <span class="menutext">Insight Data</span>
+                </div>
+            </button>
+        </a>
+        <br>
+        <button id="logout">Logout</button>
+    </div>
+    <a href="Med_stock.html"
+        style="margin-left: 390px; position: relative;top: 50px; text-decoration: none; color: black; font-size: 20px;opacity: 60%;">
+        < back</a>
+            <h1 style="color: rgb(82, 228, 147); margin-left: 420px; position: relative;top: 50px;">Medicine Adding
+            </h1>
+            <div>
+                <img src="pic/med.png" alt="" width="205px" height="238px"
+                    style="margin-left: 490px; position: relative;top: 100px;">
+                <a href="#"
+                    style="color: black; opacity: 30%; position: relative;top: 200px; right: 150px; font-size: 20px;">Edit
+                    Picture</a>
+                <p style=" position: relative;top: 100px; left: 550px;font-size: 20px;">Amoxicillin</p>
+            </div>
+
+            <div style="position: relative;left: 800px; bottom: 200px; font-size: 18px;">
+                <div>
+                    <div style="position: relative; left: -40px;">
+                        <p style="float: left;">Medicine ID:&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                        <p style="opacity: 60%;position: relative; left: -10px;">M00001</p>
+                    </div>
+                    <div style="position: relative; left: -40px;">
+                        <p style="float: left;">Medicine Name:&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                        <p style="opacity: 60%;position: relative; left: -10px;">Amoxicillin</p>
+                    </div>
+                    <div style="position: relative; left: -40px;padding-bottom: 15px;">
+                        <p style="float: left;">Type:&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                        <p style="opacity: 60%;float: left; position: relative; left: -10px;">250 mg capsule</p>
+                        <img src="pic/edit.png" alt="" width="15px" height="15px"
+                            style="margin-bottom: 10px;margin-left: 5px;">
+                    </div>
+
+                    <div style="position: relative; right: 40px; padding-bottom: 15px;">
+                        <p style="float: left;">Information:&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                        <p style="opacity: 60%;float: left; white-space: normal; position: relative; left: -10px;">
+                            Amoxicillin (also called Amoxil@, Trimox@, or Wymox@) is
+                            used to prevent or treat infections. It is available in the
+                            following forms and strengths, all of which are taken by
+                            mouth</p>
+                        <img src="pic/edit.png" alt="" width="15px" height="15px"
+                            style="margin-bottom: 10px;margin-left: 5px;">
+                    </div>
+                    <div style="position: relative; left: -40px;padding-bottom: 15px;">
+                        <p style="float: left;">Instruction:&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                        <p style="opacity: 60%;float: left; white-space: normal; position: relative; left: -10px;">You
+                            may take amoxicilin with or without food.
+                            If you have stomach pain, take amoxicillin with food.
+                            Store amoxicilin tablets and capsules at
+                            room temperature in a dry place.</p>
+                        <img src="pic/edit.png" alt="" width="15px" height="15px"
+                            style="margin-bottom: 10px;margin-left: 5px;">
+                    </div>
+                    <div style="position: relative; left: -40px;">
+                        <p style="float: left;">Possible side effects:&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                        <p style="opacity: 60%;position: relative; left: -10px;">Nausea, vomiting , Diarrhea , Rash,
+                            Loss of appetite, Stomach pain</p>
+                    </div>
+                    <div style="position: relative; left: -40px;">
+                        <p style="float: left;">Import Information:&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                        <p style="opacity: 60%;position: relative; left: -10px;">Pfizer Inc.
+                            235 East 42nd Street NY, NY 10017
+                            (212)733-2323</p>
+                    </div>
+                    <div>
+                        <div style="position: relative; left: -40px;">
+                            <p style="float: left;">Cabinet ID:&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                            <p style="opacity: 60%;position: relative; left: -10px;">C0001</p>
+                        </div>
+                        <div style="position: relative; right: 40px;padding-bottom: 15px;">
+                            <p style="float: left;">Remaining amount (dose):&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                            <p style="opacity: 60%;float: left;position: relative; left: -10px;">882</p><img
+                                src="pic/edit.png" alt="" width="15px" height="15px"
+                                style="margin-bottom: 10px;margin-left: 5px;">
+                        </div>
+                        <div style="position: relative; left: -40px;padding-bottom: 15px;">
+                            <p style="float: left;">Price per dose:&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                            <p style="opacity: 60%;float: left;position: relative; left: -10px;">6.42 THB</p><img
+                                src="pic/edit.png" alt="" width="15px" height="15px"
+                                style="margin-bottom: 10px;margin-left: 5px;">
+                        </div>
+
+
+
+
+                    </div>
+                    <button
+                        style="background-color: rgba(26, 231, 53, 0.671); border-radius: 20px; width: 200px;height: 40px; position: relative;left: 1600px;font-size: x-large;color: rgb(87, 87, 87);">Add
+                        Case</button>
+
+</body>
+
+</html>
