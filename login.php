@@ -10,12 +10,12 @@
 </head>
 
 <body>
-    <div class="py-5 text-center">
+    <div class="text-center">
         <div class="container">
             <div class="row">
                 <div class="mx-auto col-md-6 col-10 bg-white p-5">
                     <img class="img-fluid d-block" src="pic/Hua-D logo.png">
-                    <form id="c_form-h" class="border rounded pt-5 pb-5 mt-4 border-info shadow">
+                    <form id="c_form-h" class="border rounded pt-5 pb-5 mt-4 border-info shadow" action="login.php" method="post">
                         <div class="form-group row"> <label for="inputmailh"
                                 class="col-form-label ml-4 col-2">Username:</label>
                             <div class="col-8">
