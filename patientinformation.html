@@ -4,7 +4,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    type="text/css">
   <link rel="stylesheet" href="https://static.pingendo.com/bootstrap/bootstrap-4.3.1.css">
 </head>
 
@@ -47,13 +48,14 @@
         </div>
       </a>
       <div class="row h-50">
-        <div class="col-md-12 mt-5 h-50"><a class="btn btn-outline-dark mt-5 ml-4" href="#">Logout <i class="fa fa-sign-out fa-fw"></i> </a></div>
+        <div class="col-md-12 mt-5 h-50"><a class="btn btn-outline-dark mt-5 ml-4" href="#">Logout <i
+              class="fa fa-sign-out fa-fw"></i> </a></div>
       </div>
     </div>
   </div>
   <div class="">
-    <div class="container" style="margin-left: 22%;">
-      <div class="row" >
+    <div class="container" style="margin-left: 19%;">
+      <div class="row">
         <div class="col-md-12 d-inline-flex mt-3"><a class="btn btn-dark" href="#">ID</a>
           <form class="form-inline">
             <div class="input-group">
@@ -68,43 +70,52 @@
               <div class="input-group-append"></div>
             </div>
           </form><a class="btn btn-dark ml-2" href="#">Gender</a>
-          <div class="btn-group">
-            <button class="btn btn-info dropdown-toggle ml-1" data-toggle="dropdown" aria-expanded="false"> Any </button>
-            <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 54px, 0px);"> <a class="dropdown-item" href="#">Action</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Separated link</a>
-            </div>
-          </div><a class="btn btn-dark ml-2" href="#">Age</a>
-          <div class="btn-group">
-            <button class="btn btn-info dropdown-toggle ml-1" data-toggle="dropdown" aria-expanded="false"> Dropdown </button>
-            <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 54px, 0px); top: 0px; left: 0px; will-change: transform;"> <a class="dropdown-item" href="#">Action</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Separated link</a>
-            </div>
-          </div><a class="btn btn-dark ml-2" href="#">Disease</a>
-          <div class="btn-group">
-            <button class="btn btn-info dropdown-toggle ml-1" data-toggle="dropdown"> Dropdown </button>
-            <div class="dropdown-menu"> <a class="dropdown-item" href="#">Action</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Separated link</a>
-            </div>
+          <div>
+            <select name="" id=""style="height:100%; border-color: rgb(184, 184, 184); margin-left:10%;">
+                <option value="">Any</option>
+                <option value="">Male</option>
+                <option value="">Female</option>
+            </select>
+          </div>
+          <a class="btn btn-dark ml-3" href="#">Age</a>
+          <div>
+            <select name="" id="" style="height:100%; border-color: rgb(184, 184, 184);margin-left:10%;">
+                <option value="">Any</option>
+                <option value="">0-18</option>
+                <option value="">19-60</option>
+                <option value="">41-60</option>
+                <option value="">Over 60</option>
+            </select>
+          </div>
+          <a class="btn btn-dark ml-3" href="#">Disease</a>
+          <div>
+            <select name="" id=""style="height:100%; border-color: rgb(184, 184, 184);margin-left:10%;">
+                <option value="">Any</option>
+                <option value="">Influenza</option>
+                <option value="">Injuries</option>
+                <option value="">Heart Disease</option>
+                <option value="">Cancer</option>
+                <option value="">Covid-19</option>
+                <option value="">You don't love me anymore</option>
+            </select>
           </div>
         </div>
       </div>
     </div>
   </div>
-    <div class="container">
-      <div class="row" style="padding-top:5%; margin-left: 102%;">
-        <div class="col-md-12"><a class="btn btn-primary" href="#">Search</a></div>
-      </div>
+  <div class="container">
+    <div class="row" style="padding-top:5%; margin-left: 102%;">
+      <div class="col-md-12"><a class="btn btn-primary" href="#">Search</a></div>
     </div>
-      <div class="row" style="margin-left: 23%;" >
-        <div class="col-md-12 d-inline-flex mt-3">
-          <h6 class="">Result: 3 Row</h6>
-          <h6 class="" style="margin-left: 69%;">Add new Patient&nbsp;<span class="badge badge-success rounded-circle">+</span></h6>
-        </div>
+  </div>
+  <div class="row" style="margin-left: 23%;">
+    <div class="col-md-12 d-inline-flex mt-3">
+      <h6 class="">Result: 3 Row</h6>
+      <h6 class="" style="margin-left: 69%;"><a href=""> Add new Patient</a>&nbsp;<span
+          class="badge badge-success rounded-circle">+</span></h6>
     </div>
-  <div class="" >
+  </div>
+  <div class="">
     <div class="container" style="margin-left: 22%;">
       <div class="row ml-0">
         <div class="col-md-12">
@@ -154,23 +165,29 @@
       </div>
     </div>
   </div>
-  <div class="py-5" >
+  <div class="py-5">
     <div class="container">
       <div class="row" style="margin-left: 50%; padding-top: 8%;">
         <div class="col-md-12">
           <ul class="pagination">
             <li class="page-item"> <a class="page-link" href="#"> <span>«</span></a> </li>
             <li class="page-item active"> <a class="page-link" href="#">1</a> </li>
-            
+
             <li class="page-item"> <a class="page-link" href="#"> <span>»</span></a> </li>
           </ul>
         </div>
       </div>
     </div>
   </div>
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous" style=""></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous" style=""></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+    integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"
+    style=""></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"
+    style=""></script>
 </body>
 
 </html>
