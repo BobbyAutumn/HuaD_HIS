@@ -60,7 +60,7 @@ if (isset($_POST['searchpatient'])) {
 </head>
 
 <body style="overflow: hidden;">
-  <div class="h-100 " style="float: left; width: 18%; position: fixed;">
+  <div class="h-100 border-right" style="float: left; width: 18%; position: fixed;">
     <div class="container ml-0">
       <div class="row border-bottom h-25 ml-0">
         <div class="col-md-12 mx-auto my-3"><img class="img-fluid d-block w-75" src="pic/Hua-D logo.png"></div>
@@ -73,7 +73,7 @@ if (isset($_POST['searchpatient'])) {
           </div>
         </div>
       </a>
-      <a href="staffinformation.html">
+      <a href="staffinformation.php">
         <div class="row border-bottom">
           <div class="col-md-4 my-auto"><img class="img-fluid d-block w-75" src="pic/staffinfo.png"></div>
           <div class="col-md-8 my-3">
@@ -97,13 +97,21 @@ if (isset($_POST['searchpatient'])) {
           </div>
         </div>
       </a>
+      <a href="myprofile.html">
+        <div class="row border-bottom">
+          <div class="col-md-4"><img class="img-fluid d-block w-75 mt-3" src="pic/profile.png"></div>
+          <div class="col-md-8 my-3">
+            <h6 class="mt-2" style="font-weight: 700;color: rgba(0, 0, 0, 0.521);">My Profile</h6>
+          </div>
+        </div>
+      </a>
       <div class="row h-50">
-        <div class="col-md-12 mt-5 h-50"><a class="btn btn-outline-dark mt-5 ml-4" href="logout.php">Logout <i class="fa fa-sign-out fa-fw"></i> </a></div>
+        <div class="d-flex col-md-12 mt-5 h-50 justify-content-center"><a class="btn btn-outline-dark mt-0 " href="logout.php">Logout <i class="fa fa-sign-out fa-fw"></i> </a></div>
       </div>
     </div>
   </div>
-  <div class="conatiner border-left" style="margin-left: 18%;">
-    <div class="container " style="margin-left: 3%;">
+  <div style="margin-left: 18%;">
+    <div class="container" style="margin-left: 3%;">
       <div class="row ">
         <h2 class="mt-3 text-primary" style="font-weight: 400;">Patient Information</h2>
       </div>
@@ -199,7 +207,7 @@ if (isset($_POST['searchpatient'])) {
     </div>
     <div class="row" style="margin-left: 7%; margin-top: 2%;">
       <div class="col-md-12 d-inline-flex mt-1">
-        <h7 class="" style="text-decoration: underline;">Result: <?php echo mysqli_num_rows($mysqli->query("SELECT * FROM view7"));?> Row</h7>
+        <h7 class="" style="text-decoration: underline;">Result: <?php echo mysqli_num_rows($mysqli->query("SELECT * FROM view7")); ?> Row</h7>
         <h6 class="" style="margin-left: 69%;"><a href="Addnewpatient.html"> Add new Patient</a>&nbsp;<span class="badge badge-success rounded-circle">+</span></h6>
       </div>
     </div>
@@ -236,20 +244,6 @@ if (isset($_POST['searchpatient'])) {
               ?>
             </tbody>
           </table>
-        </div>
-      </div>
-    </div>
-    <div class="py-5">
-      <div class="container">
-        <div class="row" style="margin-left: 37%; margin-top: 15%;">
-          <div class="col-md-12">
-            <ul class="pagination">
-              <li class="page-item"> <a class="page-link" href="#"> <span>«</span></a> </li>
-              <li class="page-item active"> <a class="page-link" href="#">1</a> </li>
-
-              <li class="page-item"> <a class="page-link" href="#"> <span>»</span></a> </li>
-            </ul>
-          </div>
         </div>
       </div>
     </div>
