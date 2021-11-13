@@ -131,7 +131,7 @@ if (isset($_POST['searchpatient'])) {
   </div>
   <div style="margin-left: 18%;">
     <div class="container" style="margin-left: 3%;">
-      <div class="row ">
+      <div class="row">
         <h2 class="mt-3 text-primary" style="font-weight: 400;">Patient Information</h2>
       </div>
       <form class="row" action="patientinformation.php" method="post">
@@ -256,7 +256,7 @@ if (isset($_POST['searchpatient'])) {
                 echo "<td>" . $row["patientGender"] . "</td>";
                 echo "<td>" . $row["patientAge"] . "</td>";
                 echo "<td>" . $row["LastVisited"] . "</td>";
-                echo "<td><a href='editpatientinfo.html'><img src='pic/search.png' alt='' height='20'></a></td>";
+                echo '<td><a href="editpatientinfo.php?patientID='.$row["patientID"].'"><img src="pic/search.png"  height="20"></a></td>';
                 echo "<td><a href=''><img src='pic/delete.png' alt='' height='20'></a></td>";
                 echo "</tr>";
               }
