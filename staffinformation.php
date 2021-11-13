@@ -176,7 +176,8 @@ if (isset($_POST['searchstaff'])) {
         <div class="row" style="margin-left: 7%; margin-top: 2%;">
             <div class="col-md-12 d-inline-flex mt-1">
                 <h7 class="" style="text-decoration: underline;">Result: <?php echo mysqli_num_rows($mysqli->query("SELECT * FROM view6")); ?> Row</h7>
-                <h6 class="" style="margin-left: 69%;"><a href="Addnewstaff.php"> Add new Staff</a>&nbsp;<span class="badge badge-success rounded-circle">+</span></h6>
+                <h6 class="" style="margin-left: 65%;"><a href="Addrole.php"> Add Staff Role</a>&nbsp;<span class="badge badge-success rounded-circle">+</span></h6>
+                <h6 class="" style="margin-left: 2%;"><a href="Addnewstaff.php"> Add new Staff</a>&nbsp;<span class="badge badge-success rounded-circle">+</span></h6>
             </div>
         </div>
         <div class="row ml-3 mr-3">
