@@ -1,4 +1,5 @@
 <?php
+session_start();
 $mysqli = new mysqli("localhost", "root", null, "HuaD_HIS");
 if (isset($_POST['searchpatient'])) {
   $patientID = $_POST['patientid'];
@@ -26,9 +27,13 @@ if (isset($_POST['searchpatient'])) {
   } else {
     $queryAge = "CREATE OR REPLACE VIEW view4 AS SELECT * from view3 WHERE patientAge > 80";
   }
-  $queryDisease = "CREATE OR REPLACE VIEW view5 AS SELECT * FROM view4 WHERE view4.patientID IN (SELECT DISTINCT PatientCase.patientID FROM PatientCase WHERE PatientCase.diseaseID = (SELECT Disease.diseaseID FROM Disease WHERE diseaseName LIKE '%$patientDisease%'))";
+  if($patientDisease==''){
+    $queryDisease = "CREATE OR REPLACE VIEW view5 AS SELECT * FROM view4";
+  } else{
+    $queryDisease = "CREATE OR REPLACE VIEW view5 AS SELECT * FROM view4 WHERE view4.patientID IN (SELECT DISTINCT PatientCase.patientID FROM PatientCase WHERE PatientCase.diseaseID = (SELECT Disease.diseaseID FROM Disease WHERE diseaseName LIKE '%$patientDisease%'))";
+  }
   $queryLastVisited = "CREATE OR REPLACE VIEW view6 AS SELECT patientID, MAX(regisTime) AS LastVisited FROM PatientCase GROUP BY patientID";
-  $queryresult = "CREATE OR REPLACE VIEW view7 AS SELECT view5.*,view6.LastVisited FROM view5 INNER JOIN view6 ON view5.patientID=view6.patientID;";
+  $queryresult = "CREATE OR REPLACE VIEW view7 AS SELECT view5.*,view6.LastVisited FROM view5 LEFT JOIN view6 ON view5.patientID=view6.patientID;";
   $querylast = "SELECT * FROM view7";
   $result1 = $mysqli->query($queryPID);
   $result2 = $mysqli->query($queryName);
@@ -41,7 +46,7 @@ if (isset($_POST['searchpatient'])) {
 } else {
   $queryDisease = "CREATE OR REPLACE VIEW view5 AS SELECT * FROM Patient";
   $queryLastVisited = "CREATE OR REPLACE VIEW view6 AS SELECT patientID, MAX(regisTime) AS LastVisited FROM PatientCase GROUP BY patientID";
-  $queryresult = "CREATE OR REPLACE VIEW view7 AS SELECT view5.*,view6.LastVisited FROM view5 INNER JOIN view6 ON view5.patientID=view6.patientID;";
+  $queryresult = "CREATE OR REPLACE VIEW view7 AS SELECT view5.*,view6.LastVisited FROM view5 LEFT JOIN view6 ON view5.patientID=view6.patientID;";
   $querylast = "SELECT * FROM view7";
   $result5 = $mysqli->query($queryDisease);
   $result6 = $mysqli->query($queryLastVisited);
@@ -65,30 +70,44 @@ if (isset($_POST['searchpatient'])) {
       <div class="row border-bottom h-25 ml-0">
         <div class="col-md-12 mx-auto my-3"><img class="img-fluid d-block w-75" src="pic/Hua-D logo.png"></div>
       </div>
-      <a href="patientinformation.php">
+      <?php
+      if ($_SESSION['accountType'] == 'Admin' || $_SESSION['accountType'] == 'Doctor') {
+        echo '<a href="patientinformation.php">
         <div class="row border-bottom bg-info">
           <div class="col-md-4 my-auto"><img class="img-fluid d-block w-75" src="pic/patientinfo.png"></div>
           <div class="col-md-8 my-3">
             <h6 class="mt-2" style="font-weight: 700;color: rgba(0, 0, 0, 0.521);">Patient Information</h6>
           </div>
         </div>
-      </a>
-      <a href="staffinformation.php">
+      </a>';
+      }
+      ?>
+      <?php
+      if ($_SESSION['accountType'] == 'Admin' || $_SESSION['accountType'] == 'HR') {
+        echo '<a href="staffinformation.php">
         <div class="row border-bottom">
           <div class="col-md-4 my-auto"><img class="img-fluid d-block w-75" src="pic/staffinfo.png"></div>
           <div class="col-md-8 my-3">
             <h6 class="mt-2" style="font-weight: 700;color: rgba(0, 0, 0, 0.521);">Staff Information</h6>
           </div>
         </div>
-      </a>
-      <a href="medicinestock.html">
+      </a>';
+      }
+      ?>
+      <?php
+      if ($_SESSION['accountType'] == 'Admin' || $_SESSION['accountType'] == 'Pharmacist') {
+        echo '<a href="medicinestock.html">
         <div class="row border-bottom">
           <div class="col-md-4 my-auto"><img class="img-fluid d-block w-75" src="pic/medstock.png"></div>
           <div class="col-md-8 my-3">
             <h6 class="mt-2" style="font-weight: 700;color: rgba(0, 0, 0, 0.521);">Medicine Stocking</h6>
           </div>
         </div>
-      </a>
+      </a>';
+      }
+      ?>
+
+      
       <a href="">
         <div class="row border-bottom">
           <div class="col-md-4 my-auto"><img class="img-fluid d-block w-75" src="pic/insight.png"></div>
@@ -154,7 +173,7 @@ if (isset($_POST['searchpatient'])) {
             </select>
           </div>
         </div>
-        <div class="d-inline-flex mt-3 mr-3" style="max-width:12%;">
+        <div class="d-inline-flex mt-3 mr-3" style="max-width:14%;">
           <a class="btn btn-dark" href="">Age</a>
           <div>
             <select class="form-select form-control" name="age" style="height:100%; border-color: rgb(184, 184, 184);margin-left:10%;">
@@ -191,7 +210,7 @@ if (isset($_POST['searchpatient'])) {
             </select>
           </div>
         </div>
-        <div class="d-inline-flex mt-3 mr-2" style="max-width:20%;">
+        <div class="d-inline-flex mt-3 mr-2" style="max-width:19%;">
           <a class="btn btn-dark" href="">Disease</a>
           <div>
             <input type="text" class="form-control ml-1" id="inlineFormInputGroup" name="disease" placeholder="Search" <?php if (isset($_POST['searchpatient'])) {
@@ -208,7 +227,7 @@ if (isset($_POST['searchpatient'])) {
     <div class="row" style="margin-left: 7%; margin-top: 2%;">
       <div class="col-md-12 d-inline-flex mt-1">
         <h7 class="" style="text-decoration: underline;">Result: <?php echo mysqli_num_rows($mysqli->query("SELECT * FROM view7")); ?> Row</h7>
-        <h6 class="" style="margin-left: 69%;"><a href="Addnewpatient.html"> Add new Patient</a>&nbsp;<span class="badge badge-success rounded-circle">+</span></h6>
+        <h6 class="" style="margin-left: 69%;"><a href="Addnewpatient.php"> Add new Patient</a>&nbsp;<span class="badge badge-success rounded-circle">+</span></h6>
       </div>
     </div>
     <div class="row ml-3 mr-3">

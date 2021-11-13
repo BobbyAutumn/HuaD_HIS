@@ -1,4 +1,5 @@
 <?php
+session_start();
 $mysqli = new mysqli("localhost", "root", null, "HuaD_HIS");
 if (isset($_POST['searchstaff'])) {
     $staffID = $_POST['staffid'];
@@ -47,30 +48,42 @@ if (isset($_POST['searchstaff'])) {
             <div class="row border-bottom h-25 ml-0">
                 <div class="col-md-12 mx-auto my-3"><img class="img-fluid d-block w-75" src="pic/Hua-D logo.png"></div>
             </div>
-            <a href="patientinformation.php">
+            <?php
+            if ($_SESSION['accountType'] == 'Admin' || $_SESSION['accountType'] == 'Doctor') {
+                echo '<a href="patientinformation.php">
                 <div class="row border-bottom">
-                    <div class="col-md-4 my-auto"><img class="img-fluid d-block w-75" src="pic/patientinfo.png"></div>
-                    <div class="col-md-8 my-3">
-                        <h6 class="mt-2" style="font-weight: 700;color: rgba(0, 0, 0, 0.521);">Patient Information</h6>
-                    </div>
+                <div class="col-md-4 my-auto"><img class="img-fluid d-block w-75" src="pic/patientinfo.png"></div>
+                <div class="col-md-8 my-3">
+                    <h6 class="mt-2" style="font-weight: 700;color: rgba(0, 0, 0, 0.521);">Patient Information</h6>
                 </div>
-            </a>
-            <a href="staffinformation.php">
+                </div>
+            </a>';
+            }
+            ?>
+            <?php
+            if ($_SESSION['accountType'] == 'Admin' || $_SESSION['accountType'] == 'HR') {
+                echo '<a href="staffinformation.php">
                 <div class="row border-bottom bg-info">
-                    <div class="col-md-4 my-auto"><img class="img-fluid d-block w-75" src="pic/staffinfo.png"></div>
-                    <div class="col-md-8 my-3">
-                        <h6 class="mt-2" style="font-weight: 700;color: rgba(0, 0, 0, 0.521);">Staff Information</h6>
-                    </div>
+                <div class="col-md-4 my-auto"><img class="img-fluid d-block w-75" src="pic/staffinfo.png"></div>
+                <div class="col-md-8 my-3">
+                    <h6 class="mt-2" style="font-weight: 700;color: rgba(0, 0, 0, 0.521);">Staff Information</h6>
                 </div>
-            </a>
-            <a href="medicinestock.html">
+                </div>
+            </a>';
+            }
+            ?>
+            <?php
+            if ($_SESSION['accountType'] == 'Admin' || $_SESSION['accountType'] == 'Pharmacist') {
+                echo '<a href="medicinestock.html">
                 <div class="row border-bottom">
-                    <div class="col-md-4 my-auto"><img class="img-fluid d-block w-75" src="pic/medstock.png"></div>
-                    <div class="col-md-8 my-3">
-                        <h6 class="mt-2" style="font-weight: 700;color: rgba(0, 0, 0, 0.521);">Medicine Stocking</h6>
-                    </div>
+                <div class="col-md-4 my-auto"><img class="img-fluid d-block w-75" src="pic/medstock.png"></div>
+                <div class="col-md-8 my-3">
+                    <h6 class="mt-2" style="font-weight: 700;color: rgba(0, 0, 0, 0.521);">Medicine Stocking</h6>
                 </div>
-            </a>
+                </div>
+            </a>';
+            }
+            ?>
             <a href="">
                 <div class="row border-bottom">
                     <div class="col-md-4 my-auto"><img class="img-fluid d-block w-75" src="pic/insight.png"></div>
@@ -163,7 +176,7 @@ if (isset($_POST['searchstaff'])) {
         <div class="row" style="margin-left: 7%; margin-top: 2%;">
             <div class="col-md-12 d-inline-flex mt-1">
                 <h7 class="" style="text-decoration: underline;">Result: <?php echo mysqli_num_rows($mysqli->query("SELECT * FROM view6")); ?> Row</h7>
-                <h6 class="" style="margin-left: 69%;"><a href="Addnewstaff.html"> Add new Staff</a>&nbsp;<span class="badge badge-success rounded-circle">+</span></h6>
+                <h6 class="" style="margin-left: 69%;"><a href="Addnewstaff.php"> Add new Staff</a>&nbsp;<span class="badge badge-success rounded-circle">+</span></h6>
             </div>
         </div>
         <div class="row ml-3 mr-3">
@@ -206,8 +219,8 @@ if (isset($_POST['searchstaff'])) {
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous" style=""></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous" style=""></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </body>
 
 </html>

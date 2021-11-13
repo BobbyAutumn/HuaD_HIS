@@ -16,14 +16,15 @@ if (isset($_POST['login'])) {
         $result2 = $mysqli->query($uid_sql);
         $item = $result2->fetch_array();
         $_SESSION['accountID'] = $item['accountID'];
+        $_SESSION['accountType'] = $item['accountType'];
         if ($item['accountType'] == 'Doctor') {
-            header("location: Doctor.php");
+            header("location: patientinformation.php");
         } elseif ($item['accountType'] == 'HR') {
-            header("location: HR.php");
+            header("location: staffinformation.php");
         } elseif ($item['accountType'] == 'Pharmacist') {
             header("location: Pharmacist.php");
         } else {
-            header("location: Admin.php");
+            header("location: patientinformation.php");
         }
         //ไปไปตามหน้าที่คุณต้องการ
 
