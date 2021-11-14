@@ -1,65 +1,21 @@
 <?php
 session_start();
 $mysqli = new mysqli("localhost", "root", null, "HuaD_HIS");
-if (isset($_POST['addstaff'])) {
-    $staffTitle = $_POST['staffTitle'];
-    $staffFN = $_POST['staffFN'];
-    $staffLN = $_POST['staffLN'];
-    $staffIdenID = $_POST['staffIdenID'];
-    $staffTel = $_POST['staffTel'];
-    $staffDOB = $_POST['staffDOB'];
-    $staffGender = $_POST['staffGender'];
-    $staffTel = $_POST['staffTel'];
-    $staffRole = $_POST['staffRole'];
+if (isset($_POST['addrole'])) {
+    $roleName=$_POST['roleName'];
+    $salary = $_POST['salary'];
+    $department = $_POST['department'];
 
-    $target_dir = "StaffImage/";
-    $staffPic = $target_dir . basename($_FILES["staffPic"]["name"]);
-    $uploadOk = 1;
-    $imageFileType = strtolower(pathinfo($staffPic, PATHINFO_EXTENSION));
-    // Check if image file is a actual image or fake image
-    $check = getimagesize($_FILES["staffPic"]["tmp_name"]);
-    if ($check !== false) {
-        $uploadOk = 1;
-    } else {
-        echo "File is not an image.";
-        $uploadOk = 0;
-    }
-    if ($uploadOk == 0) {
-        echo "Sorry, your file was not uploaded.";
-        // if everything is ok, try to upload file
-    } else {
-        if (move_uploaded_file($_FILES["staffPic"]["tmp_name"], $staffPic)) {
-        } else {
-            echo "Sorry, there was an error uploading your file.";
-        }
-    }
-
-    $dateOfBirth = $_POST['staffDOB'];
-    $today = date("Y-m-d");
-    $diff = date_diff(date_create($dateOfBirth), date_create($today));
-    $staffAge = $diff->format('%y');
-
-    $query = "SELECT MAX(TRIM(LEADING 'S' FROM staffID)) as staff_id FROM Staff;";
+    $query = "SELECT MAX(TRIM(LEADING 'R' FROM roleID)) as role_id FROM StaffRole;";
     $result = $mysqli->query($query) or die('There was an error running the query [' . $mysqli->error . ']');
     $row = $result->fetch_assoc();
-    $last_staff_id = empty($row['staff_id']) ? 0 : $row['staff_id'];
-    $lastnumid = ltrim($last_staff_id, "0");
-    $staffID = 'S' . str_pad($lastnumid + 1, 4, "0", STR_PAD_LEFT);
+    $last_role_id = empty($row['role_id']) ? 0 : $row['role_id'];
+    $lastnumid = ltrim($last_role_id, "0");
+    $roleID = 'R' . str_pad($lastnumid + 1, 4, "0", STR_PAD_LEFT);
 
-    $rolequery = "SELECT roleID FROM StaffRole WHERE roleName='$staffRole'";
-    $result1 = $mysqli->query($rolequery);
-    $role = $result1->fetch_array();
-    $roleID = $role['roleID'];
-
-    $insertquery = "INSERT INTO Staff (staffID, staffTitle,staffFN,staffLN,staffIdenID,staffTel,staffAge,staffGender,roleID,staffDOB,staffPic) 
-    VALUES ('$staffID', '$staffTitle','$staffFN','$staffLN','$staffIdenID','$staffTel','$staffAge','$staffGender','$roleID','$staffDOB','$staffPic')";
-    $result = $mysqli->query($insertquery);
-    if ($result) {
-    } else {
-        echo $mysqli->error;
-    }
+    $insertquery = "INSERT INTO StaffRole (roleID, roleName,salary,department) VALUES ('$roleID', '$roleName','$salary','$department')";
+    $result2 = $mysqli->query($insertquery);
 }
-
 ?>
 <!DOCTYPE html>
 <html>
@@ -142,12 +98,12 @@ if (isset($_POST['addstaff'])) {
         <div class="container mt-4">
             <div class="row">
                 <div class="col-md-10 mb-3" style="margin-left: 20%;">
-                    <form action="Addnewstaff.php" method="post" enctype="multipart/form-data">
+                    <form action="Addrole.php" method="post">
                         <div class="container">
                             <div class="row">
-                                <div class="col-2 form-group">
-                                    <label for="title">Role</label><br>
-                                    <input type="text" class="form-control" placeholder="Enter Role" name="rolename">
+                                <div class="col-6 form-group">
+                                    <label for="title">Role Name</label><br>
+                                    <input type="text" class="form-control" placeholder="Enter Role" name="roleName">
                                 </div>
                             </div>
                             <div class="row">

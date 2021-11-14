@@ -7,7 +7,7 @@ if (isset($_POST['addstaff'])) {
     $staffLN = $_POST['staffLN'];
     $staffIdenID = $_POST['staffIdenID'];
     $staffTel = $_POST['staffTel'];
-    $staffDOB = $_POST['staffDOB'];
+    $staffDoB = $_POST['staffDoB'];
     $staffGender = $_POST['staffGender'];
     $staffTel = $_POST['staffTel'];
     $staffRole = $_POST['staffRole'];
@@ -51,8 +51,8 @@ if (isset($_POST['addstaff'])) {
     $role = $result1->fetch_array();
     $roleID = $role['roleID'];
 
-    $insertquery = "INSERT INTO Staff (staffID, staffTitle,staffFN,staffLN,staffIdenID,staffTel,staffAge,staffGender,roleID,staffDOB,staffPic) 
-    VALUES ('$staffID', '$staffTitle','$staffFN','$staffLN','$staffIdenID','$staffTel','$staffAge','$staffGender','$roleID','$staffDOB','$staffPic')";
+    $insertquery = "INSERT INTO Staff (staffID, staffTitle,staffFN,staffLN,staffIdenID,staffTel,staffAge,staffGender,roleID,staffDoB,staffPic) 
+    VALUES ('$staffID', '$staffTitle','$staffFN','$staffLN','$staffIdenID','$staffTel','$staffAge','$staffGender','$roleID','$staffDoB','$staffPic')";
     $result = $mysqli->query($insertquery);
     if ($result) {
     } else {
@@ -187,7 +187,7 @@ if (isset($_POST['addstaff'])) {
                             <div class="row">
                                 <div class="col-3 form-group">
                                     <label>Date of Birth</label>
-                                    <input type="date" class="form-control" placeholder="yyyy-mm-dd" name="staffDOB">
+                                    <input type="date" class="form-control" placeholder="yyyy-mm-dd" name="staffDoB">
                                 </div>
                                 <div class="col-3 form-group">
                                     <label>Gender</label><br>

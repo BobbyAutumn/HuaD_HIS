@@ -15,13 +15,22 @@ if (isset($_POST['login'])) {
         $uid_sql = "SELECT accountID,accountType FROM Account WHERE username = '$username' AND password = '$password'";
         $result2 = $mysqli->query($uid_sql);
         $item = $result2->fetch_array();
-        $_SESSION['accountID'] = $item['accountID'];
-        $_SESSION['accountType'] = $item['accountType'];
-        if ($item['accountType'] == 'Doctor') {
+        $accountID = $item['accountID'];
+        $accountType = $item['accountType'];
+
+        $sidquery = "SELECT staffID FROM Staff WHERE accountID='$accountID'";
+        $result3 = $mysqli->query($sidquery);
+        $sitem = $result3->fetch_array();
+        $staffID = $sitem['staffID'];
+
+        $_SESSION['staffID'] = $staffID;
+        $_SESSION['accountID'] = $accountID;
+        $_SESSION['accountType'] = $accountType;
+        if ($accountType == 'Doctor') {
             header("location: patientinformation.php");
-        } elseif ($item['accountType'] == 'HR') {
+        } elseif ($accountType == 'HR') {
             header("location: staffinformation.php");
-        } elseif ($item['accountType'] == 'Pharmacist') {
+        } elseif ($accountType == 'Pharmacist') {
             header("location: Pharmacist.php");
         } else {
             header("location: patientinformation.php");

@@ -1,10 +1,51 @@
 <?php
 session_start();
 $mysqli = new mysqli("localhost", "root", null, "HuaD_HIS");
+if (isset($_POST['editpatient'])) {
+    $patientID = $_GET['patientID'];
+    $patientTitle = $_POST['patientTitle'];
+    $patientFN = $_POST['patientFN'];
+    $patientLN = $_POST['patientLN'];
+    $patientIdenID = $_POST['patientIdenID'];
+    $patientTel = $_POST['patientTel'];
+    $patientGender = $_POST['patientGender'];
+    $patientDoB = $_POST['patientDoB'];
+    $target_dir = "PatientImage/";
+    $patientPic = $target_dir . basename($_FILES["patientPic"]["name"]);
+    if ($patientPic!= "PatientImage/") {
+        $uploadOk = 1;
+        $imageFileType = strtolower(pathinfo($patientPic, PATHINFO_EXTENSION));
+        // Check if image file is a actual image or fake image
+        $check = getimagesize($_FILES["patientPic"]["tmp_name"]);
+        if ($check !== false) {
+            $uploadOk = 1;
+        } else {
+            echo "File is not an image.";
+            $uploadOk = 0;
+        }
+        if ($uploadOk == 0) {
+            echo "Sorry, your file was not uploaded.";
+            // if everything is ok, try to upload file
+        } else {
+            if (move_uploaded_file($_FILES["patientPic"]["tmp_name"], $patientPic)) {
+            } else {
+                echo "Sorry, there was an error uploading your file.";
+            }
+        }
+        $queryupdate = "UPDATE Patient SET patientTitle='$patientTitle', patientFN='$patientFN', patientLN='$patientLN', 
+patientIdenID='$patientIdenID', patientTel='$patientTel', patientGender='$patientGender',patientDoB='$patientDoB',patientPic='$patientPic' WHERE patientID='$patientID'";
+        $resultupdate = $mysqli->query($queryupdate);
+    } else {
+        $queryupdate = "UPDATE Patient SET patientTitle='$patientTitle', patientFN='$patientFN', patientLN='$patientLN', 
+patientIdenID='$patientIdenID', patientTel='$patientTel', patientGender='$patientGender',patientDoB='$patientDoB' WHERE patientID='$patientID'";
+        $resultupdate = $mysqli->query($queryupdate);
+    }
+}
 $patientID = $_GET['patientID'];
 $queryinfo = "SELECT * FROM Patient WHERE patientID='$patientID'";
 $result = $mysqli->query($queryinfo);
 $info = $result->fetch_array();
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -86,14 +127,14 @@ $info = $result->fetch_array();
             <div class="row">
                 <h2 class="mt-3 text-primary" style="font-weight: 400;">Patient Information</h2>
             </div>
-            <form class="container mt-4">
+            <form class="container mt-4" action="editpatientinfo.php?patientID=<?php echo $patientID; ?>" method="post" enctype="multipart/form-data">
                 <div class="row">
                     <div class="col-md-3 text-center"><img class="img-fluid d-block" <?php echo "src='" . $info['patientPic'] . "'" ?> width="">
                         <div class="form-group mt-3">
                             <input class="form-control-file" style="font-size: 1rem; font-weight: 200;" id="img" type="file" name="patientPic">
                         </div>
                         <h5 class="text-primary"><?php echo $info['patientTitle'] . " " . $info['patientFN'] . " " . $info['patientLN']; ?></h5>
-                        <button type="submit" class="btn btn-primary" name="editinfo">Edit Patient Info</button>
+                        <button type="submit" class="btn btn-primary" name="editpatient">Edit Patient Info</button>
                     </div>
                     <div class="col-md-8" style="margin-left: 8%;">
                         <div class="row ">
@@ -101,10 +142,27 @@ $info = $result->fetch_array();
                             <div class="col-2 form-group ">
                                 <div class="form-control"> <?php echo $info['patientID'] ?> </div>
                             </div>
-                            <label class="col-form-label col-3">Identification ID: </label>
+                            <label class="col-form-label col-3 text-center">Identification ID: </label>
                             <div class="col-3 form-group ">
                                 <input type="text" class="form-control" value="<?php echo $info['patientIdenID'] ?>" name="patientIdenID">
                             </div>
+                        </div>
+                        <div class="row">
+                            <label class="col-form-label col-3">Title: </label>
+                            <div class="col-md-2 form-group ">
+                                <select class="form-select form-control" name="patientTitle">
+                                    <option <?php if ($info['patientTitle'] == 'Mr.') {
+                                                echo 'selected';
+                                            } ?>>Mr.</option>
+                                    <option <?php if ($info['patientTitle'] == 'Mrs.') {
+                                                echo 'selected';
+                                            } ?>>Mrs.</option>
+                                    <option <?php if ($info['patientTitle'] == 'Ms.') {
+                                                echo 'selected';
+                                            } ?>>Ms.</option>
+                                </select>
+                            </div>
+
                         </div>
                         <div class="row">
                             <label class="col-form-label col-3">First Name: </label>
@@ -120,25 +178,12 @@ $info = $result->fetch_array();
                         </div>
                         <div class="row">
                             <label class="col-form-label col-3">Telephone No.: </label>
-                            <div class="col-md-8 form-group ">
+                            <div class="col-md-3 form-group ">
                                 <input type="text" class="form-control" value="<?php echo $info['patientTel'] ?>" name="patientTel">
                             </div>
-                        </div>
-                        <div class="row">
-                            <label class="col-form-label col-3">Age: </label>
-                            <div class="col-2 form-group">
-                                <div class="form-control"> <?php echo $info['patientAge'] ?> </div>
-                            </div>
-                            <label class="col-form-label col-2">Date of Birth: </label>
-                            <div class="col-4 form-group">
-                                <input type="date" class="form-control" value="<?php echo $info['patientDoB'] ?>" name="patientDoB">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <label class="col-form-label col-3">Gender: </label>
-                            <div class="col-md-8 form-group ">
+                            <label class="col-form-label col-2 text-center">Gender: </label>
+                            <div class="col-md-3 form-group ">
                                 <select class="form-select form-control" name="patientGender">
-                                    <option>Select Gender</option>
                                     <option <?php if ($info['patientGender'] == 'Male') {
                                                 echo 'selected';
                                             } ?>>Male</option>
@@ -149,25 +194,35 @@ $info = $result->fetch_array();
                             </div>
                         </div>
                         <div class="row">
+                            <label class="col-form-label col-3">Age: </label>
+                            <div class="col-2 form-group">
+                                <div class="form-control"> <?php echo $info['patientAge'] ?> </div>
+                            </div>
+                            <label class="col-form-label col-2 text-center">Date of Birth: </label>
+                            <div class="col-4 form-group">
+                                <input type="date" class="form-control" value="<?php echo $info['patientDoB'] ?>" name="patientDoB">
+                            </div>
+                        </div>
+                        <div class="row">
                             <label class="col-form-label col-3">Treatment History: </label>
                             <div class="col-md-8 mb-3">
-                                <ul class="list-group">
-                                    <li class="list-group-item d-flex justify-content-between align-items-center bg-light">
-                                        16/08/2016 &nbsp;&nbsp;J00-Acute nasopharyngitis <span><a href=""><i class="fa fa-search"></i></a></span> </li>
-                                    <li class="list-group-item d-flex justify-content-between align-items-center bg-light">
-                                        16/08/2016 &nbsp;&nbsp;J00-Acute nasopharyngitis <span><a href=""><i class="fa fa-search"></i></a></span> </li>
-                                    <li class="list-group-item d-flex justify-content-between align-items-center bg-light">
-                                        16/08/2016 &nbsp;&nbsp;J00-Acute nasopharyngitis <span><a href=""><i class="fa fa-search"></i></a></span> </li>
-                                    <li class="list-group-item d-flex justify-content-between align-items-center bg-light">
-                                        16/08/2016 &nbsp;&nbsp;J00-Acute nasopharyngitis <span><a href=""><i class="fa fa-search"></i></a></span> </li>
-                                    <li class="list-group-item d-flex justify-content-between align-items-center bg-light">
-                                        16/08/2016 &nbsp;&nbsp;J00-Acute nasopharyngitis <span><a href=""><i class="fa fa-search"></i></a></span> </li>
-                                    <a href="">
-                                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                                            Add
-                                            Case <span class="badge badge-primary badge-circle">+</span> </li>
-                                    </a>
-                                </ul>
+                                <?php
+                                $querytreatment = "SELECT c.*,d.* FROM PatientCase c,Disease d WHERE patientID='$patientID' AND d.diseaseID=c.diseaseID";
+                                $resulttreatment = $mysqli->query($querytreatment);
+
+                                echo '<ul class="list-group">';
+                                while ($treatmentinfo = $resulttreatment->fetch_array()) {
+                                    echo '<li class="list-group-item d-flex justify-content-between align-items-center bg-light">' . $treatmentinfo['regisTime'] . '  ' . $treatmentinfo['diseaseName'] . '<span><a href="Caseinformation.php?caseID=' . $treatmentinfo['caseID'] . '"><i class="fa fa-search"></i></a></span> </li>';
+                                }
+                                echo '<a href="CaseInformation.php?patientID='.$patientID.'">
+                                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                Add Case <span class="badge badge-primary badge-circle">+</span> </li>
+                                        </a>
+                                    </ul>';
+
+
+                                ?>
+
                             </div>
                         </div>
                     </div>
@@ -176,8 +231,8 @@ $info = $result->fetch_array();
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous" style=""></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous" style=""></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </body>
 
 </html>

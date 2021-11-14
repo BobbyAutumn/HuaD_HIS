@@ -7,7 +7,7 @@ if (isset($_POST['addpatient'])) {
     $patientLN = $_POST['patientLN'];
     $patientIdenID = $_POST['patientIdenID'];
     $patientTel = $_POST['patientTel'];
-    $patientDOB = $_POST['patientDOB'];
+    $patientDoB = $_POST['patientDoB'];
     $patientGender = $_POST['patientGender'];
     $patientTel = $_POST['patientTel'];
 
@@ -33,7 +33,7 @@ if (isset($_POST['addpatient'])) {
         }
     }
 
-    $dateOfBirth = $_POST['patientDOB'];
+    $dateOfBirth = $_POST['patientDoB'];
     $today = date("Y-m-d");
     $diff = date_diff(date_create($dateOfBirth), date_create($today));
     $patientAge = $diff->format('%y');
@@ -45,8 +45,8 @@ if (isset($_POST['addpatient'])) {
     $lastnumid = ltrim($last_patient_id, "0");
     $patientID = 'P' . str_pad($lastnumid + 1, 4, "0", STR_PAD_LEFT);
 
-    $insertquery = "INSERT INTO Patient (patientID, patientTitle,patientFN,patientLN,patientIdenID,patientTel,patientAge,patientGender,patientDOB,patientPic) 
-    VALUES ('$patientID', '$patientTitle','$patientFN','$patientLN','$patientIdenID','$patientTel','$patientAge','$patientGender','$patientDOB','$patientPic')";
+    $insertquery = "INSERT INTO Patient (patientID, patientTitle,patientFN,patientLN,patientIdenID,patientTel,patientAge,patientGender,patientDoB,patientPic) 
+    VALUES ('$patientID', '$patientTitle','$patientFN','$patientLN','$patientIdenID','$patientTel','$patientAge','$patientGender','$patientDoB','$patientPic')";
     $result = $mysqli->query($insertquery);
     if ($result) {
     } else {
@@ -181,7 +181,7 @@ if (isset($_POST['addpatient'])) {
                             <div class="row">
                                 <div class="col-3 form-group">
                                     <label>Date of Birth</label>
-                                    <input type="date" class="form-control" placeholder="yyyy-mm-dd" name="patientDOB">
+                                    <input type="date" class="form-control" placeholder="yyyy-mm-dd" name="patientDoB">
                                 </div>
                                 <div class="col-3 form-group">
                                     <label>Gender</label><br>
