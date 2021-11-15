@@ -3,13 +3,6 @@ session_start();
 $mysqli = new mysqli("localhost", "root", null, "HuaD_HIS");
 if (isset($_GET['caseID'])) {
     $caseID = $_GET['caseID'];
-    $querycase = "SELECT c.*,d.* FROM PatientCase c,Disease d WHERE caseID='$caseID' AND d.diseaseID=c.diseaseID";
-    $querypatient = "SELECT p.*,c.* FROM Patient p,PatientCase c WHERE c.caseID = '$caseID' AND p.patientID=c.patientID";
-    $resultcase = $mysqli->query($querycase);
-    $resultpatient = $mysqli->query($querypatient);
-    $caseinfo = $resultcase->fetch_array();
-    $patientinfo = $resultpatient->fetch_array();
-
     if(isset($_POST['editcase'])){
         $weight=$_POST['weight'];
         $height = $_POST['height'];
@@ -24,11 +17,19 @@ if (isset($_GET['caseID'])) {
         $querydisease="SELECT diseaseID FROM Disease d WHERE d.diseaseName='$diseaseName'";
         $resultdisease = $mysqli->query($querydisease);
         $diseaseID=$resultdisease->fetch_array();
+        $diseaseID=$diseaseID['diseaseID'];
 
         $queryupdate="UPDATE PatientCase SET weight='$weight', height='$height', sbp='$sbp', 
 dbp='$dbp', diseaseID='$diseaseID', payAmount='$payAmount', payMethod='$payMethod',payStatus='$payStatus',annotation='$annotation' WHERE caseID='$caseID'";
         $resultupdate = $mysqli->query($queryupdate);
     }
+    
+    $querycase = "SELECT c.*,d.* FROM PatientCase c,Disease d WHERE caseID='$caseID' AND d.diseaseID=c.diseaseID";
+    $querypatient = "SELECT p.*,c.* FROM Patient p,PatientCase c WHERE c.caseID = '$caseID' AND p.patientID=c.patientID";
+    $resultcase = $mysqli->query($querycase);
+    $resultpatient = $mysqli->query($querypatient);
+    $caseinfo = $resultcase->fetch_array();
+    $patientinfo = $resultpatient->fetch_array();
 } else{
     $patientID = $_GET['patientID'];
     if (isset($_POST['addcase'])) {
@@ -158,22 +159,22 @@ dbp='$dbp', diseaseID='$diseaseID', payAmount='$payAmount', payMethod='$payMetho
                 <div class="col-md-10 mb-3" style="margin-left: 5%;">
                 <?php
                 if(isset($_GET['caseID'])){
-                    echo '<form action="CaseInformation.php?caseID="'. $caseinfo['caseID'].' method="post">
+                    echo '<form action="CaseInformation.php?caseID='. $caseinfo['caseID'].'" method="post">
                         <div class="container">
                             <div class="row">
                                 <label class="col-form-label col-2">Case ID: </label>
                                 <div class="col-2 form-group">
-                                    <div class="form-control" >' . $caseinfo['caseID'] . '</div>
+                                    <div class="form-control" style="border:none; box-shadow:none;">' . $caseinfo['caseID'] . '</div>
                                 </div>
                                 <label class="col-form-label col-2 text-center">Patient ID: </label>
                                 <div class="col-2 form-group">
-                                    <div class="form-control" >' . $caseinfo['patientID'] . '</div>
+                                    <div class="form-control" style="border:none; box-shadow:none;">' . $caseinfo['patientID'] . '</div>
                                 </div>
                             </div>
                             <div class="row">
                                 <label class="col-form-label col-2">Patient Name: </label>
                                 <div class="col-3 form-group">
-                                    <div class="form-control" >' . $patientinfo['patientTitle'] . ' ' . $patientinfo['patientFN'] . ' ' . $patientinfo['patientLN'] . '</div>
+                                    <div class="form-control" style="border:none; box-shadow:none;">' . $patientinfo['patientTitle'] . ' ' . $patientinfo['patientFN'] . ' ' . $patientinfo['patientLN'] . '</div>
                                 </div>
                             </div>
                             <div class="row">
@@ -205,45 +206,53 @@ dbp='$dbp', diseaseID='$diseaseID', payAmount='$payAmount', payMethod='$payMetho
                                 <div class="col-2 form-group">
                                     <input type="text" class="form-control" placeholder="Enter Amount" name="payAmount" value="' . $caseinfo['payAmount'] . '">
                                 </div>
-                            </div>';?>
+                            </div>
                             <div class="row">
                                 <label class="col-form-label col-2">Pay Method: </label>
                                 <div class="col-3 form-group ">
                                     <select class="form-select form-control" name="payMethod">
-                                        <option <?php if ($caseinfo['payMethod'] == 'Cash') {
+                                        <option ';
+                                        if ($caseinfo['payMethod'] == 'Cash') {
                                                     echo 'selected';
-                                                } ?> >Cash</option>
-                                        <option <?php if ($caseinfo['payMethod'] == 'Insurance') {
+                                                } 
+                                            echo '>Cash</option>
+                                        <option '; 
+                                        if ($caseinfo['payMethod'] == 'Insurance') {
                                                     echo 'selected';
-                                                } ?> >Insurance</option>
-                                        <option <?php if ($caseinfo['payMethod'] == 'Credit/Debit') {
+                                                }
+                                            echo '>Insurance</option>
+                                        <option ';
+                                        if ($caseinfo['payMethod'] == 'Credit/Debit') {
                                                     echo 'selected';
-                                                } ?> >Credit/Debit</option>
-                                        <option <?php if ($caseinfo['payMethod'] == 'Bank Transfer') {
+                                                } 
+                                            echo '>Credit/Debit</option>
+                                        <option';
+                                        if ($caseinfo['payMethod'] == 'Bank Transfer') {
                                                     echo 'selected';
-                                                } ?> >Bank Transfer</option>
+                                                } 
+                                            echo '>Bank Transfer</option>
                                     </select>
                                 </div>
                                 <label class="col-form-label col-2 text-center">Pay Status: </label>
                                 <div class="col-3 form-group ">
                                     <select class="form-select form-control" name="payStatus">
-                                        <option <?php if ($caseinfo['payStatus'] == 'Completed') {
+                                        <option ';
+                                        if ($caseinfo['payStatus'] == 'Completed') {
                                                     echo 'selected';
-                                                } ?> >Completed</option>
-                                        <option <?php if ($caseinfo['payStatus'] == 'Incomplete') {
+                                                }  
+                                            echo '>Completed</option>
+                                        <option';
+                                        if ($caseinfo['payStatus'] == 'Incomplete') {
                                                     echo 'selected';
-                                                } ?> >Incomplete</option>
+                                                }
+                                            echo '>Incomplete</option>
                                     </select>
                                 </div>
                             </div>
-                            <?php
-                            echo '
                             <div class="row">
                                 <label class="col-form-label col-2">Annotation: </label>
                                 <div class="col-9 form-group">
-                                    <textarea rows="2" class="form-control" name="annotation" value="' . $caseinfo['payAmount'] . '">
-
-                                    </textarea>
+                                    <textarea rows="2" class="form-control" name="annotation">'.$caseinfo['annotation'].'</textarea>
                                 </div>
                             </div>
 
@@ -264,7 +273,7 @@ dbp='$dbp', diseaseID='$diseaseID', payAmount='$payAmount', payMethod='$payMetho
                             <div class="row">
                                 <label class="col-form-label col-2">Patient ID: </label>
                                 <div class="col-3 form-group">
-                                    <div type="text" class="form-control" > ' . $patientID . '</div>
+                                    <div type="text" class="form-control" style="border:none; box-shadow:none;"> ' . $patientID . '</div>
                                 </div>
                             </div>
                             <div class="row">

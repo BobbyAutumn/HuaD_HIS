@@ -257,7 +257,7 @@ if (isset($_POST['searchpatient'])) {
                 echo "<td>" . $row["patientAge"] . "</td>";
                 echo "<td>" . $row["LastVisited"] . "</td>";
                 echo '<td><a href="editpatientinfo.php?patientID='.$row["patientID"].'"><img src="pic/search.png"  height="20"></a></td>';
-                echo "<td><a href=''><img src='pic/delete.png' alt='' height='20'></a></td>";
+                echo '<td><a href="Delete.php?patientID='.$row["patientID"].'"><img src="pic/delete.png" height="20"></a></td>';
                 echo "</tr>";
               }
               ?>
