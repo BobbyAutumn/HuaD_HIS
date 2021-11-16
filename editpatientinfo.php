@@ -218,7 +218,7 @@ $info = $result->fetch_array();
 
                                 echo '<ul class="list-group">';
                                 while ($treatmentinfo = $resulttreatment->fetch_array()) {
-                                    echo '<li class="list-group-item d-flex justify-content-between align-items-center bg-light">' . $treatmentinfo['regisTime'] . '  ' . $treatmentinfo['diseaseName'] . '<span><a href="Caseinformation.php?caseID=' . $treatmentinfo['caseID'] . '"><i class="fa fa-search"></i></a></span> </li>';
+                                    echo '<li class="list-group-item d-flex justify-content-between align-items-center bg-light">' . $treatmentinfo['regisTime'] . '  ' . $treatmentinfo['diseaseName'] . '<span><a href="Caseinformation.php?caseID=' . $treatmentinfo['caseID'] . '"><i class="fa fa-search"></i></a><a href=""><i class="fa fa-delete"></i></a></span> </li>';
                                 }
                                 echo '<a href="CaseInformation.php?patientID=' . $patientID . '">
                                             <li class="list-group-item d-flex justify-content-between align-items-center">
