@@ -208,7 +208,7 @@ if (isset($_POST['searchstaff'])) {
                                 echo "<td>" . $row["staffAge"] . "</td>";
                                 echo "<td>" . $row["roleName"] . "</td>";
                                 echo "<td>" . $row["department"] . "</td>";
-                                echo "<td><a href='editpatientinfo.html'><img src='pic/search.png' alt='' height='20'></a></td>";
+                                echo '<td><a href="editstaffinfo.php?staffID='. $row["staffID"] .'"><img src="pic/search.png" height="20"></a></td>';
                                 echo "<td><a href=''><img src='pic/delete.png' alt='' height='20'></a></td>";
                                 echo "</tr>";
                             }

@@ -163,11 +163,11 @@ dbp='$dbp', diseaseID='$diseaseID', payAmount='$payAmount', payMethod='$payMetho
                         <div class="container">
                             <div class="row">
                                 <label class="col-form-label col-2">Case ID: </label>
-                                <div class="col-2 form-group">
+                                <div class="col-3 form-group">
                                     <div class="form-control" style="border:none; box-shadow:none;">' . $caseinfo['caseID'] . '</div>
                                 </div>
                                 <label class="col-form-label col-2 text-center">Patient ID: </label>
-                                <div class="col-2 form-group">
+                                <div class="col-3 form-group">
                                     <div class="form-control" style="border:none; box-shadow:none;">' . $caseinfo['patientID'] . '</div>
                                 </div>
                             </div>
@@ -175,6 +175,10 @@ dbp='$dbp', diseaseID='$diseaseID', payAmount='$payAmount', payMethod='$payMetho
                                 <label class="col-form-label col-2">Patient Name: </label>
                                 <div class="col-3 form-group">
                                     <div class="form-control" style="border:none; box-shadow:none;">' . $patientinfo['patientTitle'] . ' ' . $patientinfo['patientFN'] . ' ' . $patientinfo['patientLN'] . '</div>
+                                </div>
+                                <label class="col-form-label col-2 text-center">Register Time: </label>
+                                <div class="col-3 form-group">
+                                    <div class="form-control" style="border:none; box-shadow:none;">' . $caseinfo['regisTime'] . '</div>
                                 </div>
                             </div>
                             <div class="row">
