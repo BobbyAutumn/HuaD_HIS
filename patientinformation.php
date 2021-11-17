@@ -27,9 +27,9 @@ if (isset($_POST['searchpatient'])) {
   } else {
     $queryAge = "CREATE OR REPLACE VIEW view4 AS SELECT * from view3 WHERE patientAge > 80";
   }
-  if($patientDisease==''){
+  if ($patientDisease == '') {
     $queryDisease = "CREATE OR REPLACE VIEW view5 AS SELECT * FROM view4";
-  } else{
+  } else {
     $queryDisease = "CREATE OR REPLACE VIEW view5 AS SELECT * FROM view4 WHERE view4.patientID IN (SELECT DISTINCT PatientCase.patientID FROM PatientCase WHERE PatientCase.diseaseID = (SELECT Disease.diseaseID FROM Disease WHERE diseaseName LIKE '%$patientDisease%'))";
   }
   $queryLastVisited = "CREATE OR REPLACE VIEW view6 AS SELECT patientID, MAX(regisTime) AS LastVisited FROM PatientCase GROUP BY patientID";
@@ -68,7 +68,7 @@ if (isset($_POST['searchpatient'])) {
   <div class="h-100 border-right" style="float: left; width: 18%; position: fixed;">
     <div class="container ml-0">
       <div class="row border-bottom h-25 ml-0">
-        <div class="col-md-12 mx-auto my-3"><img class="img-fluid d-block w-75" src="pic/Hua-D logo.png"></div>
+        <div class="col-md-12 ml-3 my-3"><img class="img-fluid d-block w-75" src="pic/Hua-D logo.png"></div>
       </div>
       <?php
       if ($_SESSION['accountType'] == 'Admin' || $_SESSION['accountType'] == 'Doctor') {
@@ -96,7 +96,7 @@ if (isset($_POST['searchpatient'])) {
       ?>
       <?php
       if ($_SESSION['accountType'] == 'Admin' || $_SESSION['accountType'] == 'Pharmacist') {
-        echo '<a href="medicinestock.html">
+        echo '<a href="medicinestock.php">
         <div class="row border-bottom">
           <div class="col-md-4 my-auto"><img class="img-fluid d-block w-75" src="pic/medstock.png"></div>
           <div class="col-md-8 my-3">
@@ -106,17 +106,7 @@ if (isset($_POST['searchpatient'])) {
       </a>';
       }
       ?>
-
-      
-      <a href="">
-        <div class="row border-bottom">
-          <div class="col-md-4 my-auto"><img class="img-fluid d-block w-75" src="pic/insight.png"></div>
-          <div class="col-md-8 my-3">
-            <h6 class="mt-2" style="font-weight: 700;color: rgba(0, 0, 0, 0.521);">Insight Data</h6>
-          </div>
-        </div>
-      </a>
-      <a href="myprofile.html">
+      <a href="myprofile.php">
         <div class="row border-bottom">
           <div class="col-md-4"><img class="img-fluid d-block w-75 mt-3" src="pic/profile.png"></div>
           <div class="col-md-8 my-3">
@@ -256,8 +246,8 @@ if (isset($_POST['searchpatient'])) {
                 echo "<td>" . $row["patientGender"] . "</td>";
                 echo "<td>" . $row["patientAge"] . "</td>";
                 echo "<td>" . $row["LastVisited"] . "</td>";
-                echo '<td><a href="editpatientinfo.php?patientID='.$row["patientID"].'"><img src="pic/search.png"  height="20"></a></td>';
-                echo '<td><a href="Delete.php?patientID='.$row["patientID"].'"><img src="pic/delete.png" height="20"></a></td>';
+                echo '<td><a href="editpatientinfo.php?patientID=' . $row["patientID"] . '"><img src="pic/search.png"  height="20"></a></td>';
+                echo '<td><a href="Delete.php?patientID=' . $row["patientID"] . '"><img src="pic/delete.png" height="20"></a></td>';
                 echo "</tr>";
               }
               ?>

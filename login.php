@@ -18,12 +18,18 @@ if (isset($_POST['login'])) {
         $accountID = $item['accountID'];
         $accountType = $item['accountType'];
 
-        $sidquery = "SELECT staffID FROM Staff WHERE accountID='$accountID'";
+        $sidquery = "SELECT * FROM Staff WHERE accountID='$accountID'";
         $result3 = $mysqli->query($sidquery);
         $sitem = $result3->fetch_array();
         $staffID = $sitem['staffID'];
+        $staffTitle = $sitem['staffTitle'];
+        $staffFN = $sitem['staffFN'];
+        $staffLN = $sitem['staffLN'];
 
         $_SESSION['staffID'] = $staffID;
+        $_SESSION['staffTitle'] = $staffTitle;
+        $_SESSION['staffFN'] = $staffFN;
+        $_SESSION['staffLN'] = $staffLN;
         $_SESSION['accountID'] = $accountID;
         $_SESSION['accountType'] = $accountType;
         if ($accountType == 'Doctor') {
@@ -31,7 +37,7 @@ if (isset($_POST['login'])) {
         } elseif ($accountType == 'HR') {
             header("location: staffinformation.php");
         } elseif ($accountType == 'Pharmacist') {
-            header("location: Pharmacist.php");
+            header("location: medicinestock.php");
         } else {
             header("location: patientinformation.php");
         }

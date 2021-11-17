@@ -75,7 +75,7 @@ if (isset($_POST['addstaff'])) {
     <div class="h-100 border-right " style="float: left; width: 18%; position: fixed;">
         <div class="container">
             <div class="row border-bottom h-25 ml-0">
-                <div class="col-md-12 mx-auto my-3"><img class="img-fluid d-block w-75" src="pic/Hua-D logo.png"></div>
+                <div class="col-md-12 ml-3 my-3"><img class="img-fluid d-block w-75" src="pic/Hua-D logo.png"></div>
             </div>
             <?php
             if ($_SESSION['accountType'] == 'Admin' || $_SESSION['accountType'] == 'Doctor') {
@@ -103,7 +103,7 @@ if (isset($_POST['addstaff'])) {
             ?>
             <?php
             if ($_SESSION['accountType'] == 'Admin' || $_SESSION['accountType'] == 'Pharmacist') {
-                echo '<a href="medicinestock.html">
+                echo '<a href="medicinestock.php">
                 <div class="row border-bottom">
                 <div class="col-md-4 my-auto"><img class="img-fluid d-block w-75" src="pic/medstock.png"></div>
                 <div class="col-md-8 my-3">
@@ -113,15 +113,7 @@ if (isset($_POST['addstaff'])) {
                 </a>';
             }
             ?>
-            <a href="">
-                <div class="row border-bottom">
-                    <div class="col-md-4 my-auto"><img class="img-fluid d-block w-75" src="pic/insight.png"></div>
-                    <div class="col-md-8 my-3">
-                        <h6 class="mt-2" style="font-weight: 700;color: rgba(0, 0, 0, 0.521);">Insight Data</h6>
-                    </div>
-                </div>
-            </a>
-            <a href="myprofile.html">
+            <a href="myprofile.php">
                 <div class="row border-bottom">
                     <div class="col-md-4"><img class="img-fluid d-block w-75 mt-3" src="pic/profile.png"></div>
                     <div class="col-md-8 my-3">
@@ -173,13 +165,11 @@ if (isset($_POST['addstaff'])) {
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-6 form-group">
+                                <div class="col-4 form-group">
                                     <label>Identification ID</label>
                                     <input type="text" class="form-control" placeholder="Enter Staff Identification Number" name="staffIdenID">
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-6 form-group">
+                                <div class="col-4 form-group">
                                     <label>Telephone</label>
                                     <input type="text" class="form-control" placeholder="Enter Staff Telephone Number" name="staffTel">
                                 </div>
@@ -197,7 +187,10 @@ if (isset($_POST['addstaff'])) {
                                         <option>Female</option>
                                     </select>
                                 </div>
-                                <div class="col-3 form-group">
+
+                            </div>
+                            <div class="row">
+                                <div class="col-4 form-group">
                                     <label>Role</label>
                                     <input type="text" class="form-control" placeholder="Enter Staff Role" name="staffRole">
                                 </div>

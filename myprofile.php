@@ -1,8 +1,8 @@
 <?php
 session_start();
 $mysqli = new mysqli("localhost", "root", null, "HuaD_HIS");
-if (isset($_POST['editstaff'])) {
-    $staffID = $_GET['staffID'];
+if (isset($_POST['editprofile'])) {
+    $staffID = $_SESSION['staffID'];
     $staffTitle = $_POST['staffTitle'];
     $staffFN = $_POST['staffFN'];
     $staffLN = $_POST['staffLN'];
@@ -53,10 +53,9 @@ staffIdenID='$staffIdenID', staffTel='$staffTel', staffGender='$staffGender',sta
         $resultupdate = $mysqli->query($queryupdate);
     }
 }
-$staffID = $_GET['staffID'];
+$staffID = $_SESSION['staffID'];
 $queryinfo = "SELECT r.*,s.* FROM Staff s,StaffRole r WHERE staffID='$staffID' AND r.roleID=s.roleID";
-$queryinfo2 = "CALL ShowStaffInfo('$staffID')";
-$result = $mysqli->query($queryinfo2);
+$result = $mysqli->query($queryinfo);
 $info = $result->fetch_array();
 
 ?>
@@ -91,7 +90,7 @@ $info = $result->fetch_array();
             <?php
             if ($_SESSION['accountType'] == 'Admin' || $_SESSION['accountType'] == 'HR') {
                 echo '<a href="staffinformation.php">
-                <div class="row border-bottom bg-info">
+                <div class="row border-bottom">
                 <div class="col-md-4 my-auto"><img class="img-fluid d-block w-75" src="pic/staffinfo.png"></div>
                 <div class="col-md-8 my-3">
                     <h6 class="mt-2" style="font-weight: 700;color: rgba(0, 0, 0, 0.521);">Staff Information</h6>
@@ -113,7 +112,7 @@ $info = $result->fetch_array();
             }
             ?>
             <a href="myprofile.php">
-                <div class="row border-bottom">
+                <div class="row border-bottom bg-info">
                     <div class="col-md-4"><img class="img-fluid d-block w-75 mt-3" src="pic/profile.png"></div>
                     <div class="col-md-8 my-3">
                         <h6 class="mt-2" style="font-weight: 700;color: rgba(0, 0, 0, 0.521);">My Profile</h6>
@@ -128,22 +127,27 @@ $info = $result->fetch_array();
     <div style="margin-left: 18%;">
         <div class="container" style="margin-left: 3%;">
             <div class="row">
-                <h2 class="mt-3 text-primary" style="font-weight: 400;">Staff Information</h2>
+                <h2 class="mt-3 text-primary" style="font-weight: 400;">My Profile</h2>
             </div>
-            <form class="container mt-4" action="editstaffinfo.php?staffID=<?php echo $staffID; ?>" method="post" enctype="multipart/form-data">
+            <form class="container mt-4" action="myprofile.php?staffID=<?php echo $staffID; ?>" method="post" enctype="multipart/form-data">
                 <div class="row">
-                    <div class="col-md-3 text-center"><img class="img-fluid d-block" <?php echo "src='" . $info['staffPic'] . "'" ?> width="">
+                    <div class="col-md-3 text-center"><img class="img-fluid d-block" <?php echo "src='" .
+                                                                                            $info['staffPic'] . "'" ?> width="">
                         <div class="form-group mt-3">
                             <input class="form-control-file" style="font-size: 1rem; font-weight: 200;" id="img" type="file" name="staffPic">
                         </div>
-                        <h5 class="text-primary"><?php echo $info['staffTitle'] . " " . $info['staffFN'] . " " . $info['staffLN']; ?></h5>
-                        <button type="submit" class="btn btn-primary" name="editstaff">Edit Staff Info</button>
+                        <h5 class="text-primary">
+                            <?php echo $info['staffTitle'] . " " . $info['staffFN'] . " " . $info['staffLN']; ?>
+                        </h5>
+                        <button type="submit" class="btn btn-primary" name="editprofile">Edit Profile</button>
                     </div>
                     <div class="col-md-8" style="margin-left: 8%;">
                         <div class="row ">
                             <label class="col-form-label col-3">Staff ID: </label>
                             <div class="col-2 form-group ">
-                                <div class="form-control" style="border:none; box-shadow:none;"> <?php echo $info['staffID'] ?> </div>
+                                <div class="form-control" style="border:none; box-shadow:none;">
+                                    <?php echo $info['staffID'] ?>
+                                </div>
                             </div>
                             <label class="col-form-label col-3 text-center">Identification ID: </label>
                             <div class="col-3 form-group ">
@@ -159,7 +163,8 @@ $info = $result->fetch_array();
                                             } ?>>Mr.</option>
                                     <option <?php if ($info['staffTitle'] == 'Mrs.') {
                                                 echo 'selected';
-                                            } ?>>Mrs.</option>
+                                            } ?>>Mrs.
+                                    </option>
                                     <option <?php if ($info['staffTitle'] == 'Ms.') {
                                                 echo 'selected';
                                             } ?>>Ms.</option>
@@ -189,17 +194,21 @@ $info = $result->fetch_array();
                                 <select class="form-select form-control" name="staffGender">
                                     <option <?php if ($info['staffGender'] == 'Male') {
                                                 echo 'selected';
-                                            } ?>>Male</option>
+                                            } ?>>Male
+                                    </option>
                                     <option <?php if ($info['staffGender'] == 'Female') {
                                                 echo 'selected';
-                                            } ?>>Female</option>
+                                            } ?>>Female
+                                    </option>
                                 </select>
                             </div>
                         </div>
                         <div class="row">
                             <label class="col-form-label col-3">Age: </label>
                             <div class="col-2 form-group">
-                                <div class="form-control" style="border:none; box-shadow:none;"> <?php echo $info['staffAge'] ?> </div>
+                                <div class="form-control" style="border:none; box-shadow:none;">
+                                    <?php echo $info['staffAge'] ?>
+                                </div>
                             </div>
                             <label class="col-form-label col-2 text-center">Date of Birth: </label>
                             <div class="col-4 form-group">
@@ -213,13 +222,17 @@ $info = $result->fetch_array();
                             </div>
                             <label class="col-form-label col-2 text-center">Department: </label>
                             <div class="col-3 form-group">
-                                <div class="form-control" style="border:none; box-shadow:none;"> <?php echo $info['department'] ?> </div>
+                                <div class="form-control" style="border:none; box-shadow:none;">
+                                    <?php echo $info['department'] ?>
+                                </div>
                             </div>
                         </div>
                         <div class="row">
                             <label class="col-form-label col-3">Salary: </label>
                             <div class="col-3 form-group">
-                                <div class="form-control" style="border:none; box-shadow:none;"> <?php echo $info['salary'] ?> </div>
+                                <div class="form-control" style="border:none; box-shadow:none;">
+                                    <?php echo $info['salary'] ?>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -228,8 +241,8 @@ $info = $result->fetch_array();
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous" style=""></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous" style=""></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </body>
 
 </html>

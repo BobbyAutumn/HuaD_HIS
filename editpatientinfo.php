@@ -49,6 +49,7 @@ patientIdenID='$patientIdenID', patientTel='$patientTel', patientGender='$patien
 }
 $patientID = $_GET['patientID'];
 $queryinfo = "SELECT * FROM Patient WHERE patientID='$patientID'";
+$queryinfo2 = "CALL ShowPatientInfo('$patientID');";
 $result = $mysqli->query($queryinfo);
 $info = $result->fetch_array();
 
@@ -67,7 +68,7 @@ $info = $result->fetch_array();
     <div class="h-100 border-right" style="float: left; width: 18%; position: fixed;">
         <div class="container ml-0">
             <div class="row border-bottom h-25 ml-0">
-                <div class="col-md-12 mx-auto my-3"><img class="img-fluid d-block w-75" src="pic/Hua-D logo.png"></div>
+                <div class="col-md-12 ml-3 my-3"><img class="img-fluid d-block w-75" src="pic/Hua-D logo.png"></div>
             </div>
             <?php
             if ($_SESSION['accountType'] == 'Admin' || $_SESSION['accountType'] == 'Doctor') {
@@ -95,7 +96,7 @@ $info = $result->fetch_array();
             ?>
             <?php
             if ($_SESSION['accountType'] == 'Admin' || $_SESSION['accountType'] == 'Pharmacist') {
-                echo '<a href="medicinestock.html">
+                echo '<a href="medicinestock.php">
                 <div class="row border-bottom">
                 <div class="col-md-4 my-auto"><img class="img-fluid d-block w-75" src="pic/medstock.png"></div>
                 <div class="col-md-8 my-3">
@@ -105,17 +106,7 @@ $info = $result->fetch_array();
             </a>';
             }
             ?>
-
-
-            <a href="">
-                <div class="row border-bottom">
-                    <div class="col-md-4 my-auto"><img class="img-fluid d-block w-75" src="pic/insight.png"></div>
-                    <div class="col-md-8 my-3">
-                        <h6 class="mt-2" style="font-weight: 700;color: rgba(0, 0, 0, 0.521);">Insight Data</h6>
-                    </div>
-                </div>
-            </a>
-            <a href="myprofile.html">
+            <a href="myprofile.php">
                 <div class="row border-bottom">
                     <div class="col-md-4"><img class="img-fluid d-block w-75 mt-3" src="pic/profile.png"></div>
                     <div class="col-md-8 my-3">
@@ -213,12 +204,13 @@ $info = $result->fetch_array();
                             <label class="col-form-label col-3">Treatment History: </label>
                             <div class="col-md-8 mb-3">
                                 <?php
-                                $querytreatment = "SELECT c.*,d.* FROM PatientCase c,Disease d WHERE patientID='$patientID' AND d.diseaseID=c.diseaseID ORDER BY regisTime ASC ";
+                                $querytreatment = "SELECT c.*,d.* FROM PatientCase c,Disease d WHERE patientID='$patientID' AND d.diseaseID=c.diseaseID ORDER BY regisTime ASC; ";
+                                $querytreatment2="CALL ShowPatientTreatment('$patientID');";
                                 $resulttreatment = $mysqli->query($querytreatment);
 
                                 echo '<ul class="list-group">';
                                 while ($treatmentinfo = $resulttreatment->fetch_array()) {
-                                    echo '<li class="list-group-item d-flex justify-content-between align-items-center bg-light">' . $treatmentinfo['regisTime'] . '  ' . $treatmentinfo['diseaseName'] . '<span><a href="Caseinformation.php?caseID=' . $treatmentinfo['caseID'] . '"><i class="fa fa-search"></i></a><a href=""><i class="fa fa-delete"></i></a></span> </li>';
+                                    echo '<li class="list-group-item d-flex justify-content-between align-items-center bg-light">' . $treatmentinfo['regisTime'] . ' ' . $treatmentinfo['diseaseName'] . ' ' . $treatmentinfo['payStatus'] . '<span><a href="Caseinformation.php?caseID=' . $treatmentinfo['caseID'] . '"><i class="fa fa-search"></i></a><a href=""><i class="fa fa-delete"></i></a></span> </li>';
                                 }
                                 echo '<a href="CaseInformation.php?patientID=' . $patientID . '">
                                             <li class="list-group-item d-flex justify-content-between align-items-center">

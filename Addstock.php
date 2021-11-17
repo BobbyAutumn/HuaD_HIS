@@ -1,21 +1,36 @@
 <?php
 session_start();
 $mysqli = new mysqli("localhost", "root", null, "HuaD_HIS");
-if (isset($_POST['addrole'])) {
-    $roleName = $_POST['roleName'];
-    $salary = $_POST['salary'];
-    $department = $_POST['department'];
+if (isset($_POST['addstock'])) {
+    $medID = $_GET['medID'];
+    $amount = $_POST['amount'];
+    $staffID = $_SESSION['staffID'];
+    date_default_timezone_set('Asia/Bangkok');
+    $regisTime = date('Y-m-d H:i:s');
 
-    $query = "SELECT MAX(TRIM(LEADING 'R' FROM roleID)) as role_id FROM StaffRole;";
+    $query = "SELECT MAX(TRIM(LEADING 'L' FROM stockID)) as stock_id FROM Stocking;";
     $result = $mysqli->query($query) or die('There was an error running the query [' . $mysqli->error . ']');
     $row = $result->fetch_assoc();
-    $last_role_id = empty($row['role_id']) ? 0 : $row['role_id'];
-    $lastnumid = ltrim($last_role_id, "0");
-    $roleID = 'R' . str_pad($lastnumid + 1, 4, "0", STR_PAD_LEFT);
+    $last_stock_id = empty($row['stock_id']) ? 0 : $row['stock_id'];
+    $lastnumid = ltrim($last_stock_id, "0");
+    $stockID = 'L' . str_pad($lastnumid + 1, 4, "0", STR_PAD_LEFT);
 
-    $insertquery = "INSERT INTO StaffRole (roleID, roleName,salary,department) VALUES ('$roleID', '$roleName','$salary','$department')";
+    $oldamountquery = "SELECT amountdose FROM Medicine WHERE medID='$medID'";
+    $result = $mysqli->query($oldamountquery);
+    $oldamount = $result->fetch_array();
+    $oldamount = $oldamount['amountdose'];
+    $newamount = $oldamount + $amount;
+
+    $queryupdate = "UPDATE Medicine SET amountdose='$newamount' WHERE medID='$medID'";
+    $resultupdate = $mysqli->query($queryupdate);
+
+    $insertquery = "INSERT INTO Stocking (stockID, medID,staffID,amount,regisTime,Type) VALUES ('$stockID', '$medID','$staffID','$amount','$regisTime','Add')";
     $result2 = $mysqli->query($insertquery);
 }
+$medID = $_GET['medID'];
+$queryinfo = "SELECT * FROM Medicine WHERE medID='$medID'";
+$result = $mysqli->query($queryinfo);
+$info = $result->fetch_array();
 ?>
 <!DOCTYPE html>
 <html>
@@ -48,7 +63,7 @@ if (isset($_POST['addrole'])) {
             <?php
             if ($_SESSION['accountType'] == 'Admin' || $_SESSION['accountType'] == 'HR') {
                 echo '<a href="staffinformation.php">
-                <div class="row border-bottom bg-info">
+                <div class="row border-bottom">
                 <div class="col-md-4 my-auto"><img class="img-fluid d-block w-75" src="pic/staffinfo.png"></div>
                 <div class="col-md-8 my-3">
                 <h6 class="mt-2" style="font-weight: 700;color: rgba(0, 0, 0, 0.521);">Staff Information</h6>
@@ -60,7 +75,7 @@ if (isset($_POST['addrole'])) {
             <?php
             if ($_SESSION['accountType'] == 'Admin' || $_SESSION['accountType'] == 'Pharmacist') {
                 echo '<a href="medicinestock.php">
-                <div class="row border-bottom">
+                <div class="row border-bottom bg-info">
                 <div class="col-md-4 my-auto"><img class="img-fluid d-block w-75" src="pic/medstock.png"></div>
                 <div class="col-md-8 my-3">
                 <h6 class="mt-2" style="font-weight: 700;color: rgba(0, 0, 0, 0.521);">Medicine Stocking</h6>
@@ -85,34 +100,42 @@ if (isset($_POST['addrole'])) {
     </div>
     <div class="container" style="margin-left: 20.5%;">
         <div class="row ">
-            <h2 class="mt-3 text-primary" style="font-weight: 400;">Add Role</h2>
+            <h2 class="mt-3 text-primary" style="font-weight: 400;">Add Stock</h2>
         </div>
         <div class="container mt-4">
             <div class="row">
                 <div class="col-md-10 mb-3" style="margin-left: 20%;">
-                    <form action="Addrole.php" method="post">
+                    <form action="Addstock.php?medID=<?php echo $medID; ?>" method="post">
                         <div class="container">
                             <div class="row">
-                                <div class="col-6 form-group">
-                                    <label for="title">Role Name</label><br>
-                                    <input type="text" class="form-control" placeholder="Enter Role" name="roleName">
-                                </div>
+                                <label class="col-form-label col-3">Medicine ID:</label><br>
+                                <div class="form-control col-3" style="border:none; box-shadow:none;"> <?php echo $info['medID'] ?> </div>
                             </div>
                             <div class="row">
-                                <div class="col-6 form-group">
-                                    <label>Salary</label>
-                                    <input type="text" class="form-control" placeholder="Enter Salary" name="salary">
-                                </div>
+                                <label class="col-form-label col-3">Medicine Name:</label><br>
+                                <div class="form-control col-3" style="border:none; box-shadow:none;"> <?php echo $info['medName'] ?> </div>
                             </div>
                             <div class="row">
-                                <div class="col-6 form-group">
-                                    <label>Department</label>
-                                    <input type="text" class="form-control" placeholder="Enter Department" name="department">
+                                <label class="col-form-label col-3">Staff ID:</label><br>
+                                <div class="form-control col-3" style="border:none; box-shadow:none;"> <?php echo $_SESSION['staffID'] ?> </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-form-label col-3">Staff Name:</label><br>
+                                <div class="form-control col-3" style="border:none; box-shadow:none;"> <?php echo $_SESSION['staffTitle'] . ' ' . $_SESSION['staffFN'] . ' ' . $_SESSION['staffLN'] ?> </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-form-label col-3">Amount Left: </label>
+                                <div class="form-control col-4" style="border:none; box-shadow:none;"> <?php echo $info['amountdose'] ?> </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-form-label col-3">Amount to Add: </label>
+                                <div class="col-4 form-group ">
+                                    <input type="text" class="form-control" name="amount">
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col form-group">
-                                    <button type="submit" class="btn btn-primary" name="addrole">Add Role</button>
+                                    <button type="submit" class="btn btn-primary" name="addstock">Add Stock</button>
                                 </div>
                             </div>
 
