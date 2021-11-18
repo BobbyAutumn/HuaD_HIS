@@ -16,8 +16,8 @@ if (isset($_POST['searchstaff'])) {
         $queryGender = "CREATE OR REPLACE VIEW view4 AS SELECT * from view3 WHERE staffGender = '$staffGender'";
     }
     $queryRole = "CREATE OR REPLACE VIEW view5 AS SELECT * from view4 WHERE roleName LIKE '%$staffRole%'";
-    $queryDepartment = "CREATE OR REPLACE VIEW view6 AS SELECT * FROM view5 WHERE department LIKE '%$staffDepartment%'";
-    $querylast = "SELECT * FROM view6";
+    $queryDepartment = "CREATE OR REPLACE VIEW view7 AS SELECT * FROM view5 WHERE department LIKE '%$staffDepartment%'";
+    $querylast = "SELECT * FROM view7";
     $result1 = $mysqli->query($firstquery);
     $result2 = $mysqli->query($queryPID);
     $result3 = $mysqli->query($queryName);
@@ -26,8 +26,8 @@ if (isset($_POST['searchstaff'])) {
     $result6 = $mysqli->query($queryDepartment);
     $result7 = $mysqli->query($querylast);
 } else {
-    $firstquery = "CREATE OR REPLACE VIEW view6 AS SELECT Staff.*,StaffRole.roleName, StaffRole.department FROM Staff INNER JOIN StaffRole ON Staff.roleID=StaffRole.roleID ;";
-    $querylast = "SELECT * FROM view6 ORDER BY staffID";
+    $firstquery = "CREATE OR REPLACE VIEW view7 AS SELECT Staff.*,StaffRole.roleName, StaffRole.department FROM Staff INNER JOIN StaffRole ON Staff.roleID=StaffRole.roleID ;";
+    $querylast = "SELECT * FROM view7 ORDER BY staffID";
     $result1 = $mysqli->query($firstquery);
     $result7 = $mysqli->query($querylast);
 }

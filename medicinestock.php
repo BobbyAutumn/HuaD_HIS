@@ -9,16 +9,16 @@ if (isset($_POST['searchmedicine'])) {
     $queryMID = "CREATE OR REPLACE VIEW view1 AS SELECT * FROM Medicine m WHERE m.medID LIKE '%$medID%'";
     $queryName = "CREATE OR REPLACE VIEW view2 AS SELECT * from view1 WHERE (medName LIKE '%$medName%')";
     $queryType = "CREATE OR REPLACE VIEW view3 AS SELECT * from view2 WHERE (brand LIKE '%$brand%')";
-    $queryCID = "CREATE OR REPLACE VIEW view4 AS SELECT * from view3 WHERE (cabinetID LIKE '%$cabinetID%')";
-    $querylast = "SELECT * FROM view4";
+    $queryCID = "CREATE OR REPLACE VIEW view7 AS SELECT * from view3 WHERE (cabinetID LIKE '%$cabinetID%')";
+    $querylast = "SELECT * FROM view7";
     $result1 = $mysqli->query($queryMID);
     $result2 = $mysqli->query($queryName);
     $result3 = $mysqli->query($queryType);
     $result4 = $mysqli->query($queryCID);
     $result5 = $mysqli->query($querylast);
 } else {
-    $queryCID = "CREATE OR REPLACE VIEW view4 AS SELECT * from Medicine";
-    $querylast = "SELECT * FROM view4";
+    $queryCID = "CREATE OR REPLACE VIEW view7 AS SELECT * from Medicine";
+    $querylast = "SELECT * FROM view7";
     $result4 = $mysqli->query($queryCID);
     $result5 = $mysqli->query($querylast);
 }
