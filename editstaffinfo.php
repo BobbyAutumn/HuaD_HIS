@@ -56,7 +56,7 @@ staffIdenID='$staffIdenID', staffTel='$staffTel', staffGender='$staffGender',sta
 $staffID = $_GET['staffID'];
 $queryinfo = "SELECT r.*,s.* FROM Staff s,StaffRole r WHERE staffID='$staffID' AND r.roleID=s.roleID";
 $queryinfo2 = "CALL ShowStaffInfo('$staffID')";
-$result = $mysqli->query($queryinfo2);
+$result = $mysqli->query($queryinfo);
 $info = $result->fetch_array();
 
 ?>
