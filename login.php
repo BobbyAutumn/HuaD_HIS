@@ -6,13 +6,13 @@ if (isset($_POST['login'])) {
     $password = $_POST['password'];
 
     //query 
-    $sql = "SELECT * FROM Account WHERE username = '$username' AND password = '$password'";
+    $sql = "SELECT * FROM Account WHERE username = '$username' AND password = SHA1('$password')";
     $result = $mysqli->query($sql);
 
     // หาจำนวนเรกคอร์ดข้อมูล
     if (mysqli_num_rows($result) > 0) {
         session_start();
-        $uid_sql = "SELECT accountID,accountType FROM Account WHERE username = '$username' AND password = '$password'";
+        $uid_sql = "SELECT accountID,accountType FROM Account WHERE username = '$username' AND password = SHA1('$password')";
         $result2 = $mysqli->query($uid_sql);
         $item = $result2->fetch_array();
         $accountID = $item['accountID'];

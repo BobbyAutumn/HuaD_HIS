@@ -22,7 +22,7 @@ if (isset($_POST['register'])) {
 
 
         $addaccount = "INSERT INTO Account (accountID,username,password,accountType) 
-    VALUES ('$next_account_id','$username','$password','$role')";
+    VALUES ('$next_account_id','$username',SHA1('$password'),'$role')";
         $result2 = $mysqli->query($addaccount);
         $updatestaff = "UPDATE Staff SET accountID='$next_account_id' WHERE staffID='$staffid'";
         $result3 = $mysqli->query($updatestaff);
